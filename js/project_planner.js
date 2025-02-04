@@ -57,6 +57,15 @@ function createItemInputList(items) {
 }
 
 
+// Setup the item input and list events listeners
+function setupItemInputListEvents(items, item_input, item_list, stack, rest) {
+    item_input.addEventListener("input", () => {
+        let stackSize = itemStackSize(items, item_input.value)
+        rest.setAttribute("max", stackSize)
+    })
+}
+
+
 // Create the stack and rest inputs
 function createStackRestInput() {
     let stack_input = document.createElement('input')
@@ -70,12 +79,32 @@ function createStackRestInput() {
 }
 
 
+// Setup the stack and rest inputs events listeners
+function setupStackRestInputEvents(stack, rest, amount) {
+    stack.addEventListener("input", () => {
+        amount.value = Number(stack.value) * Number(rest.getAttribute("max")) + Number(rest.value)
+    })
+    rest.addEventListener("input", () => {
+        amount.value = Number(stack.value) * Number(rest.getAttribute("max")) + Number(rest.value)
+    })
+}
+
+
 // Create the amount input
 function createAmountInput() {
     let amount_input = document.createElement('input')
     amount_input.type = "number"
 
     return amount_input
+}
+
+
+// Setup the amount input events listeners
+function setupAmountInputEvents(stack, rest, amount) {
+    amount.addEventListener("input", () => {
+        stack.value = Math.floor(Number(amount.value) / Number(rest.getAttribute("max")))
+        rest.value = Number(amount.value) % Number(rest.getAttribute("max"))
+    })
 }
 
 
@@ -88,6 +117,12 @@ function createRow(items) {
     let [item_input, item_list] = createItemInputList(items)
     let [stack_input, rest_input] = createStackRestInput()
     let amount_input = createAmountInput()
+
+
+    // Setup events listeners
+    setupItemInputListEvents(items, item_input, item_list, stack_input, rest_input)
+    setupStackRestInputEvents(stack_input, rest_input, amount_input)
+    setupAmountInputEvents(stack_input, rest_input, amount_input)
 
 
     // Create cells

@@ -16,3 +16,12 @@ body {
     justify-content: center;
     gap: .5rem;
 }
+
+.planner-config table {
+    text-align: center;
+}
+
+.planner-config input, button {
+    width: 10rem;
+    height: 1rem;
+}

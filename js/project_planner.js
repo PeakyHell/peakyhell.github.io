@@ -127,7 +127,7 @@ function createRow(items) {
 
     // Create cells
     let item_list_cell = createCell([item_input, item_list])
-    let stack_rest_cell = createCell([stack_input, "+", rest_input])
+    let stack_rest_cell = createCell([stack_input, " + ", rest_input])
     let amount_cell = createCell([amount_input])
 
 
